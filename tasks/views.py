@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
-from .models import Category, Label, Task
-from .serializers import CategorySerializer, LabelSerializer, TaskSerializer
+from .models import Category, Label, Task, Comment
+from .serializers import CategorySerializer, LabelSerializer, TaskSerializer, CommentSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -22,3 +22,12 @@ class TaskViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
