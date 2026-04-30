@@ -1,6 +1,6 @@
-from rest_framework import viewsets
-from .models import Category, Label
-from .serializers import CategorySerializer, LabelSerializer
+from rest_framework import viewsets, permissions
+from .models import Category, Label, Task
+from .serializers import CategorySerializer, LabelSerializer, TaskSerializer
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -11,3 +11,14 @@ class CategoryViewSet(viewsets.ModelViewSet):
 class LabelViewSet(viewsets.ModelViewSet):
     queryset = Label.objects.all()
     serializer_class = LabelSerializer
+
+
+class TaskViewSet(viewsets.ModelViewSet):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Task.objects.filter(owner=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
