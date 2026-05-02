@@ -121,3 +121,9 @@ STATIC_URL = 'static/'
 
 # Auth settings
 AUTH_USER_MODEL = 'tasks.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
