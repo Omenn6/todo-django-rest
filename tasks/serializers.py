@@ -35,6 +35,7 @@ class TaskSerializer(serializers.ModelSerializer):
             'owner',
             'owner_name',
         ]
+        read_only_fields = ['owner']
 
 
 class CommentSerializer(serializers.ModelSerializer):

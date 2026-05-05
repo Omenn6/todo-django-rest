@@ -36,7 +36,7 @@ class Task(models.Model):
     priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='medium')
 
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='tasks')
-    labels = models.ManyToManyField(Label, related_name='tasks')
+    labels = models.ManyToManyField(Label, related_name='tasks', blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
 
     def __str__(self):
